@@ -2,26 +2,25 @@ class SongStore:
     def __init__(self, capacity):
         self.capacity = capacity
         self.store = {}
-        self.recently_played = []
+        
     
     def add_song(self, user, song):
-        if user in self.store:
-            user_songs = self.store[user]
-            user_songs.append(song)
-            self.recently_played.remove((user, song))
-        else:
-            user_songs = [song]
-            self.store[user] = user_songs
+        if user not in self.store:
+            self.store[user] = []
 
-        self.recently_played.append((user, song))
+        user_songs = self.store[user]
 
-        if len(self.recently_played) > self.capacity:
-            oldest_song = self.recently_played.pop(0)
-            user_songs = self.store[oldest_song[0]]
-            user_songs.remove(oldest_song[1])
+        if song in user_songs:
+            user_songs.remove(song)
+        
+        user_songs.append(song)
 
+        if len(user_songs) > self.capacity:
+            user_songs.pop(0)
+        
     def get_recently_played(self, user):
         if user in self.store:
-            return self.store[user]
+            return self.store[user][::-1]
         else:
             return[]
+         
