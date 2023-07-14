@@ -1,0 +1,7 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore generated files
+song_store/__pycache__/
+song_store/test/__pycache__
